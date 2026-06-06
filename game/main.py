@@ -1,4 +1,6 @@
+import numpy
 import pygame
+from moviepy import VideoFileClip
 from pygame import display
 from pygame.time import Clock
 
@@ -19,8 +21,25 @@ def init_pygame():
     return screen
 
 
+def show_splash_screen(screen):
+    clip = VideoFileClip("assets/splash_screen.mp4")
+
+    for frame in clip.iter_frames(fps=clip.fps):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+
+        surface = pygame.surfarray.make_surface(numpy.transpose(frame, (1, 0, 2)))
+
+        screen.blit(surface, (0, 0))
+        pygame.display.flip()
+        Clock().tick(clip.fps)
+
+
 def run_game():
     screen = init_pygame()
+    show_splash_screen(screen)
 
     player = Player()
     station = Station()
