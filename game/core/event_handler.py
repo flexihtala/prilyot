@@ -32,14 +32,15 @@ class EventHandler:
                 self.set_keys.add(event.key)
 
         for key in self.set_keys:
-            match key:
-                case pygame.K_DOWN:
-                    player.move_down()
-                case pygame.K_UP:
-                    player.move_up()
-                case pygame.K_LEFT:
-                    player.move_left()
-                case pygame.K_RIGHT:
-                    player.move_right()
-                case pygame.K_e if player.is_near_station(station):
-                    raise NotImplementedError
+            if not player.is_freeze:
+                match key:
+                    case pygame.K_DOWN:
+                        player.move_down()
+                    case pygame.K_UP:
+                        player.move_up()
+                    case pygame.K_LEFT:
+                        player.move_left()
+                    case pygame.K_RIGHT:
+                        player.move_right()
+            if key == pygame.K_e and player.is_near_station(station):
+                player.is_freeze = True
