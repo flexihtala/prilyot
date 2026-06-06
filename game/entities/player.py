@@ -1,4 +1,4 @@
-from pygame import Surface, Rect, draw, Color, Rect
+from pygame import Surface, draw, Rect
 
 from game.entities.base import BaseEntity
 
