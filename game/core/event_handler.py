@@ -1,4 +1,3 @@
-import logging
 
 import pygame
 from pygame.event import Event
@@ -11,7 +10,12 @@ class EventHandler:
         self.game_state = game_state
         self.key_is_down = False
         self.set_keys: set[int] = set()
-        self.registered_keys: set[int] = {pygame.K_DOWN, pygame.K_UP, pygame.K_LEFT, pygame.K_RIGHT}
+        self.registered_keys: set[int] = {
+            pygame.K_DOWN,
+            pygame.K_UP,
+            pygame.K_LEFT,
+            pygame.K_RIGHT,
+        }
 
     def handle_events(self, events: list[Event]):
         player = self.game_state.player
@@ -36,4 +40,3 @@ class EventHandler:
                     player.move_left()
                 case pygame.K_RIGHT:
                     player.move_right()
-
