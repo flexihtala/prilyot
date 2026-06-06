@@ -42,12 +42,15 @@ class EventHandler:
                     else:
                         if len(task.current_text) <= MAX_TEXT_LEN:
                             task.current_text += event.unicode
+
+                if event.key == pygame.K_e and player.is_near_station(station):
+                    task.status = TaskStatus.open
+
             if event.type == pygame.MOUSEBUTTONUP and self.is_mouse_button_pressed:
                 self.is_mouse_button_pressed = False
                 self.game_state.player.shooter.frame_counter = -1
 
-                if event.key == pygame.K_e and player.is_near_station(station):
-                    task.status = TaskStatus.open
+
 
             if event.type == pygame.KEYDOWN and event.key in self.registered_keys:
                 self.set_keys.add(event.key)

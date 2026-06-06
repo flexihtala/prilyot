@@ -40,7 +40,7 @@ def show_splash_screen(screen):
 
 def run_game():
     screen = init_pygame()
-    # show_splash_screen(screen)
+    show_splash_screen(screen)
 
     player = Player()
     station = Station()
