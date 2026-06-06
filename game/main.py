@@ -11,6 +11,7 @@ from game.entities.game import Game
 from game.entities.game_state import GameState
 from game.entities.player import Player
 from game.entities.station import Station
+from game.entities.task import Task
 from game.entities.timer import Timer
 
 
@@ -19,6 +20,7 @@ def init_pygame():
     screen = pygame.display.set_mode(constants.SCREEN_SIZE)
     pygame.display.set_caption("Прилёт")
     return screen
+
 
 def show_splash_screen(screen):
     clip = VideoFileClip("assets/splash_screen.mp4")
@@ -29,13 +31,12 @@ def show_splash_screen(screen):
                 pygame.quit()
                 exit()
 
-        surface = pygame.surfarray.make_surface(
-            numpy.transpose(frame, (1, 0, 2))
-        )
+        surface = pygame.surfarray.make_surface(numpy.transpose(frame, (1, 0, 2)))
 
         screen.blit(surface, (0, 0))
         pygame.display.flip()
         Clock().tick(clip.fps)
+
 
 def run_game():
     screen = init_pygame()
@@ -44,9 +45,10 @@ def run_game():
     player = Player()
     station = Station()
     timer = Timer()
+    task = Task()
     monster_spawner = MonsterSpawner()
 
-    game_state = GameState(player=player, station=station, timer=timer)
+    game_state = GameState(player=player, station=station, timer=timer, task=task)
     event_handler = EventHandler(game_state)
     game = Game(game_state)
     clock = Clock()
