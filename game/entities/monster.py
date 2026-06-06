@@ -1,3 +1,5 @@
+import random
+
 from pygame import Surface, Rect, transform, image
 from pygame.math import Vector2
 
@@ -12,9 +14,8 @@ class Monster(BaseEntity):
         self.sprite_image = Rect(
             self.position[0], self.position[1], self.width, self.height
         )
-        self.image = transform.scale(
-            image.load("assets/monster.png").convert_alpha(), (64, 128)
-        )
+        image_name = self._get_image()
+        self.image = transform.scale(image.load(image_name).convert_alpha(), (64, 128))
         self.speed_coef = 2
 
     def update(self, game_state):
@@ -34,3 +35,7 @@ class Monster(BaseEntity):
 
     def render(self, screen: Surface):
         screen.blit(self.image, self.sprite_image)
+
+    def _get_image(self):
+        number = random.randint(1, 5)
+        return f"assets/monster_{number}.png"
