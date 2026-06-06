@@ -27,6 +27,34 @@ class Task(BaseEntity):
                 ),
                 correct_answer="12",
             ),
+            TaskSchema(
+                image=transform.scale(
+                    image.load("assets/tasks/task_2.png").convert_alpha(),
+                    (self.width, self.height),
+                ),
+                correct_answer="102",
+            ),
+            TaskSchema(
+                image=transform.scale(
+                    image.load("assets/tasks/task_4.png").convert_alpha(),
+                    (self.width, self.height),
+                ),
+                correct_answer="attractive",
+            ),
+            TaskSchema(
+                image=transform.scale(
+                    image.load("assets/tasks/task_5.png").convert_alpha(),
+                    (self.width, self.height),
+                ),
+                correct_answer="2",
+            ),
+            TaskSchema(
+                image=transform.scale(
+                    image.load("assets/tasks/task_6.png").convert_alpha(),
+                    (self.width, self.height),
+                ),
+                correct_answer="0,9",
+            ),
         ]
         self.status = TaskStatus.close
         self.current_text = ""
@@ -47,6 +75,7 @@ class Task(BaseEntity):
         print("Хороший ответ")
         self.status = TaskStatus.close
         self.current_text = ""
+        self.tasks_number += 1
 
     def render(self, screen: Surface):
         if self.status not in TaskStatus.open:
