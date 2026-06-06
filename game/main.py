@@ -66,7 +66,7 @@ def show_splash_screen(screen, path_video, path_music: str | None = None):
 
 def load_music():
     pygame.mixer.music.load("assets/sounds/main_part_song.mp3")
-    pygame.mixer.music.set_volume(0.5)
+    pygame.mixer.music.set_volume(0.25)
 
 
 def run_game():
@@ -86,7 +86,7 @@ def run_game():
     event_handler = EventHandler(game_state)
     game = Game(game_state)
     clock = Clock()
-try:
+    try:
         while True:
             clock.tick(60)
             event_handler.handle_events(events=pygame.event.get())
@@ -95,6 +95,7 @@ try:
             game.render(screen=screen)
             display.flip()
     except TheEndError:
+        pygame.mixer.music.stop()
         show_splash_screen(screen=screen, path_video="assets/finish_1920x1080.mp4", path_music="assets/finish_music.mp3")
 
 
