@@ -1,6 +1,6 @@
 import pygame
 from pygame import display
-
+from pygame.time import Clock
 from game.core.event_handler import EventHandler
 from game.entities.game import Game
 from game.entities.game_state import GameState
@@ -11,7 +11,7 @@ from game.entities.timer import Timer
 
 def init_pygame():
     pygame.init()
-    screen = pygame.display.set_mode((800, 600))
+    screen = pygame.display.set_mode((1920, 1080))
     pygame.display.set_caption("Прилёт")
     return screen
 
@@ -27,6 +27,8 @@ def run_game():
     game = Game(game_state)
 
     while True:
+        Clock().tick(60)
+        screen.fill((0, 0, 0))
         event_handler.handle_events(pygame.event.get())
         game.update()
         game.render(screen)
