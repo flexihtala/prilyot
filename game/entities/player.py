@@ -5,21 +5,23 @@ from game.entities.base import BaseEntity
 
 class Player(BaseEntity):
     def __init__(self):
-        self.position = (450, 200)
+        self.position = [450, 200]
+        self.width = 32
+        self.height = 64
         self.sprite_image = Rect(450, 200, 32, 64)
-        self.speed = 20
+        self.speed = 5
 
     def render(self, screen: Surface):
-        draw.rect(screen, (1, 200, 1), self.sprite_image)
+        draw.rect(screen, (1, 200, 1), Rect(*self.position, self.width, self.height))
 
     def move_up(self):
-        self.sprite_image.y -= self.speed
+        self.position[1] -= self.speed
 
     def move_down(self):
-        self.sprite_image.y += self.speed
+        self.position[1] += self.speed
 
     def move_left(self):
-        self.sprite_image.x -= self.speed
+        self.position[0] -= self.speed
 
     def move_right(self):
-        self.sprite_image.x += self.speed
+        self.position[0] += self.speed
