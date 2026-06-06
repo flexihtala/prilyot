@@ -23,8 +23,12 @@ def init_pygame():
     return screen
 
 
-def show_splash_screen(screen, path_video):
+def show_splash_screen(screen, path_video, path_music: str | None = None):
     clip = VideoFileClip(path_video)
+
+    if path_music is not None:
+        sound = pygame.mixer.Sound(path_music)
+        sound.play()
 
     for frame in clip.iter_frames(fps=clip.fps):
         for event in pygame.event.get():
@@ -63,7 +67,7 @@ def run_game():
             game.render(screen=screen)
             display.flip()
     except TheEndError:
-        show_splash_screen(screen=screen, path_video="assets/finish_1920x1080.mp4")
+        show_splash_screen(screen=screen, path_video="assets/finish_1920x1080.mp4", path_music="assets/finish_music.mp3")
 
 
 if __name__ == "__main__":
