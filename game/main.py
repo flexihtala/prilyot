@@ -14,6 +14,7 @@ from game.entities.player import Player
 from game.entities.station import Station
 from game.entities.task import Task
 from game.entities.timer import Timer
+from game.scenes.menu import Menu
 
 
 def init_pygame():
@@ -73,6 +74,9 @@ def run_game():
     screen = init_pygame()
     show_splash_screen(screen=screen, path_video="assets/splash_screen.mp4")
     load_music()
+
+    menu = Menu()
+    menu.run_scene_loop(screen)
 
     pygame.mixer.music.play(-1)
 
