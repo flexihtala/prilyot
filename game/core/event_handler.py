@@ -42,6 +42,9 @@ class EventHandler:
                         if len(task.current_text) <= MAX_TEXT_LEN:
                             task.current_text += event.unicode
 
+                if event.key == pygame.K_e and player.is_near_station(station):
+                    task.status = TaskStatus.open
+
             if event.type == pygame.KEYDOWN and event.key in self.registered_keys:
                 self.set_keys.add(event.key)
 
@@ -56,5 +59,3 @@ class EventHandler:
                         player.move_left()
                     case pygame.K_RIGHT:
                         player.move_right()
-            if key == pygame.K_e and player.is_near_station(station):
-                task.status = TaskStatus.open
