@@ -1,18 +1,19 @@
 from pygame import Surface, Rect, image, transform
 
 from game.entities.base import BaseEntity
+from game import constants
 
 
 class Player(BaseEntity):
     def __init__(self):
-        self.position = [100, 100]
-        self.width = 32
-        self.height = 64
-        self.hitbox = Rect(100, 100, 32, 64)
+        self.position = constants.PLAYER_START_POSITION
+        self.width = constants.PLAYER_WIDTH
+        self.height = constants.PLAYER_HEIGHT
+        self.hitbox = Rect(100, 100, self.width, self.height)
         self.image = transform.scale(
-            image.load("assets/player.png").convert_alpha(), (32, 64)
+            image.load("assets/player.png").convert_alpha(), (self.width, self.height)
         )
-        self.speed = 5
+        self.speed = constants.PLAYER_SPEED
 
     def render(self, screen: Surface):
         screen.blit(self.image, Rect(*self.position, self.width, self.height))

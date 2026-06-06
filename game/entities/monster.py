@@ -1,4 +1,4 @@
-from pygame import Surface, draw, Rect, transform, image
+from pygame import Surface, Rect, transform, image
 from pygame.math import Vector2
 
 from game.entities.base import BaseEntity
@@ -12,7 +12,9 @@ class Monster(BaseEntity):
         self.sprite_image = Rect(
             self.position[0], self.position[1], self.width, self.height
         )
-        self.image = transform.scale(image.load("assets/monster.png").convert_alpha(), (64, 128))
+        self.image = transform.scale(
+            image.load("assets/monster.png").convert_alpha(), (64, 128)
+        )
         self.speed_coef = 2
 
     def update(self, game_state):
