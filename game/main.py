@@ -7,6 +7,7 @@ from pygame.time import Clock
 import constants
 from game.core.event_handler import EventHandler
 from game.core.monster_spawner import MonsterSpawner
+from game.entities.errors import TheEndError
 from game.entities.game import Game
 from game.entities.game_state import GameState
 from game.entities.player import Player
@@ -22,20 +23,46 @@ def init_pygame():
     return screen
 
 
-def show_splash_screen(screen):
-    clip = VideoFileClip("assets/splash_screen.mp4")
+def show_splash_screen(screen, path_video, path_music: str | None = None):
+    clip = VideoFileClip(path_video)
 
-    for frame in clip.iter_frames(fps=clip.fps):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                exit()
+    sound = None
+    if path_music is not None:
+        sound = pygame.mixer.Sound(path_music)
+        sound.play()
 
-        surface = pygame.surfarray.make_surface(numpy.transpose(frame, (1, 0, 2)))
+    clock = pygame.time.Clock()
+    start_time = pygame.time.get_ticks()
 
-        screen.blit(surface, (0, 0))
-        pygame.display.flip()
-        Clock().tick(clip.fps)
+    try:
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    if sound is not None:
+                        sound.stop()
+                    clip.close()
+                    pygame.quit()
+                    exit()
+
+            elapsed = (pygame.time.get_ticks() - start_time) / 1000
+
+            if elapsed >= clip.duration:
+                break
+
+            frame = clip.get_frame(elapsed)
+            surface = pygame.surfarray.make_surface(
+                numpy.transpose(frame, (1, 0, 2))
+            )
+
+            screen.blit(surface, (0, 0))
+            pygame.display.flip()
+
+            clock.tick(60)
+
+    finally:
+        if sound is not None:
+            sound.stop()
+        clip.close()
 
 def load_music():
     pygame.mixer.music.load("assets/sounds/main_part_song.mp3")
@@ -44,7 +71,7 @@ def load_music():
 
 def run_game():
     screen = init_pygame()
-    show_splash_screen(screen)
+    show_splash_screen(screen=screen, path_video="assets/splash_screen.mp4")
     load_music()
 
     pygame.mixer.music.play(-1)
@@ -59,13 +86,16 @@ def run_game():
     event_handler = EventHandler(game_state)
     game = Game(game_state)
     clock = Clock()
-    while True:
-        clock.tick(60)
-        event_handler.handle_events(events=pygame.event.get())
-        game.update(game_state=game_state)
-        monster_spawner.spawn_monster(game_state=game_state)
-        game.render(screen=screen)
-        display.flip()
+try:
+        while True:
+            clock.tick(60)
+            event_handler.handle_events(events=pygame.event.get())
+            game.update(game_state=game_state)
+            monster_spawner.spawn_monster(game_state=game_state)
+            game.render(screen=screen)
+            display.flip()
+    except TheEndError:
+        show_splash_screen(screen=screen, path_video="assets/finish_1920x1080.mp4", path_music="assets/finish_music.mp3")
 
 
 if __name__ == "__main__":
