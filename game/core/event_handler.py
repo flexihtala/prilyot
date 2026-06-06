@@ -14,10 +14,12 @@ class EventHandler:
             pygame.K_UP,
             pygame.K_LEFT,
             pygame.K_RIGHT,
+            pygame.K_e,
         }
 
     def handle_events(self, events: list[Event]):
         player = self.game_state.player
+        station = self.game_state.station
 
         for event in events:
             if event.type == pygame.QUIT:
@@ -39,3 +41,5 @@ class EventHandler:
                     player.move_left()
                 case pygame.K_RIGHT:
                     player.move_right()
+                case pygame.K_e if player.is_near_station(station):
+                    raise NotImplementedError

@@ -1,7 +1,14 @@
+from __future__ import annotations
 from pygame import Surface, Rect, image, transform
 
 from game.entities.base import BaseEntity
 from game import constants
+from typing import TYPE_CHECKING
+
+from game.entities.station import Station
+
+if TYPE_CHECKING:
+    from game.entities.game_state import GameState
 
 
 class Player(BaseEntity):
@@ -9,14 +16,20 @@ class Player(BaseEntity):
         self.position = constants.PLAYER_START_POSITION
         self.width = constants.PLAYER_WIDTH
         self.height = constants.PLAYER_HEIGHT
-        self.hitbox = Rect(100, 100, self.width, self.height)
+        self.hitbox = Rect(*self.position, self.width, self.height)
         self.image = transform.scale(
             image.load("assets/player.png").convert_alpha(), (self.width, self.height)
         )
         self.speed = constants.PLAYER_SPEED
 
+    def is_near_station(self, station: Station) -> bool:
+        return self.hitbox.colliderect(station.hitbox)
+
+    def update(self, game_state: GameState):
+        self.hitbox = Rect(*self.position, self.width, self.height)
+
     def render(self, screen: Surface):
-        screen.blit(self.image, Rect(*self.position, self.width, self.height))
+        screen.blit(self.image, self.hitbox)
 
     def move_up(self):
         self.position[1] -= self.speed

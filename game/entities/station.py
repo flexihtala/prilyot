@@ -12,6 +12,7 @@ class Station(BaseEntity):
         self.image = transform.scale(
             image.load("assets/station.png").convert_alpha(), (self.width, self.height)
         )
+        self.hitbox = Rect(*self.position, self.width, self.height)
 
     def render(self, screen: Surface):
         screen.blit(self.image, Rect(*self.position, self.width, self.height))
