@@ -11,6 +11,7 @@ from game.entities.game import Game
 from game.entities.game_state import GameState
 from game.entities.player import Player
 from game.entities.station import Station
+from game.entities.task import Task
 from game.entities.timer import Timer
 
 
@@ -39,14 +40,15 @@ def show_splash_screen(screen):
 
 def run_game():
     screen = init_pygame()
-    show_splash_screen(screen)
+    # show_splash_screen(screen)
 
     player = Player()
     station = Station()
     timer = Timer()
+    task = Task()
     monster_spawner = MonsterSpawner()
 
-    game_state = GameState(player=player, station=station, timer=timer)
+    game_state = GameState(player=player, station=station, timer=timer, task=task)
     event_handler = EventHandler(game_state)
     game = Game(game_state)
     clock = Clock()
@@ -58,7 +60,6 @@ def run_game():
         monster_spawner.spawn_monster(game_state=game_state)
         game.render(screen=screen)
         display.flip()
-        print(clock)
 
 
 if __name__ == "__main__":

@@ -23,8 +23,7 @@ class Player(BaseEntity):
             image.load("assets/player.png").convert_alpha(), (self.width, self.height)
         )
         self.speed = constants.PLAYER_SPEED
-        self.is_freeze = False
-        self.health = 100
+        self.health = 1e6
 
     def is_near_station(self, station: Station) -> bool:
         return self.hitbox.colliderect(station.hitbox)

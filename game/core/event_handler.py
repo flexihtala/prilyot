@@ -1,6 +1,8 @@
 import pygame
 from pygame.event import Event
+from game.constants import MAX_TEXT_LEN
 
+from game.entities.enums import TaskStatus
 from game.entities.game_state import GameState
 
 
@@ -20,6 +22,7 @@ class EventHandler:
     def handle_events(self, events: list[Event]):
         player = self.game_state.player
         station = self.game_state.station
+        task = self.game_state.task
 
         for event in events:
             if event.type == pygame.QUIT:
@@ -28,11 +31,22 @@ class EventHandler:
                 if event.key in self.set_keys:
                     self.set_keys.remove(event.key)
 
+                if task.status is TaskStatus.open:
+                    if event.key == pygame.K_BACKSPACE:
+                        task.current_text = task.current_text[:-1]
+
+                    elif event.key == pygame.K_RETURN:
+                        task.status = TaskStatus.enter
+
+                    else:
+                        if len(task.current_text) <= MAX_TEXT_LEN:
+                            task.current_text += event.unicode
+
             if event.type == pygame.KEYDOWN and event.key in self.registered_keys:
                 self.set_keys.add(event.key)
 
         for key in self.set_keys:
-            if not player.is_freeze:
+            if task.status is not TaskStatus.open:
                 match key:
                     case pygame.K_DOWN:
                         player.move_down()
@@ -43,4 +57,4 @@ class EventHandler:
                     case pygame.K_RIGHT:
                         player.move_right()
             if key == pygame.K_e and player.is_near_station(station):
-                player.is_freeze = True
+                task.status = TaskStatus.open
