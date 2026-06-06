@@ -5,6 +5,7 @@ from game.constants import MAX_TEXT_LEN
 from game.entities.enums import TaskStatus
 from game.entities.game_state import GameState
 
+
 class EventHandler:
     def __init__(self, game_state: GameState):
         self.game_state = game_state
@@ -50,8 +51,6 @@ class EventHandler:
                 self.is_mouse_button_pressed = False
                 self.game_state.player.shooter.frame_counter = -1
 
-
-
             if event.type == pygame.KEYDOWN and event.key in self.registered_keys:
                 self.set_keys.add(event.key)
 
@@ -59,7 +58,6 @@ class EventHandler:
                 self.is_mouse_button_pressed = True
 
             self.mouse_pos = list(pygame.mouse.get_pos())
-
 
         for key in self.set_keys:
             if task.status is not TaskStatus.open:

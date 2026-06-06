@@ -43,7 +43,11 @@ class GameState:
 
     @property
     def entities_for_render(self) -> list[BaseEntity]:
-        return [self.station, *self.bullets, self.player, *self.monsters,
+        return [
+            self.station,
+            *self.bullets,
+            self.player,
+            *self.monsters,
             self.timer,
             self.task,
         ]

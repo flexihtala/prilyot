@@ -8,6 +8,7 @@ from game.entities.base import BaseEntity
 if TYPE_CHECKING:
     from game.entities.game_state import GameState
 
+
 class Bullet(BaseEntity):
     def __init__(self, position: Vector2, direction: list[int]):
         self.position = position
@@ -38,8 +39,12 @@ class Bullet(BaseEntity):
         self._check_collisions(game_state)
 
     def render(self, screen: Surface):
-        draw.circle(screen, color="white", center=self.hitbox.center, radius=self.width / 2)
-        draw.circle(screen, color="black", center=self.hitbox.center, radius=self.width / 2 - 1)
+        draw.circle(
+            screen, color="white", center=self.hitbox.center, radius=self.width / 2
+        )
+        draw.circle(
+            screen, color="black", center=self.hitbox.center, radius=self.width / 2 - 1
+        )
 
     def _check_collisions(self, game_state: GameState):
         for monster in game_state.monsters:

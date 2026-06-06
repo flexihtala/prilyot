@@ -40,7 +40,10 @@ def show_splash_screen(screen):
 
 def run_game():
     screen = init_pygame()
+    pygame.mixer.music.load("assets/sounds/main_part_song.mp3")
     show_splash_screen(screen)
+
+    pygame.mixer.music.play(-1)
 
     player = Player()
     station = Station()
@@ -52,7 +55,6 @@ def run_game():
     event_handler = EventHandler(game_state)
     game = Game(game_state)
     clock = Clock()
-
     while True:
         clock.tick(60)
         event_handler.handle_events(events=pygame.event.get())
