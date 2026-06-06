@@ -31,9 +31,6 @@ class EventHandler:
             if event.type == pygame.KEYUP:
                 if event.key in self.set_keys:
                     self.set_keys.remove(event.key)
-            if event.type == pygame.MOUSEBUTTONUP and self.is_mouse_button_pressed:
-                self.is_mouse_button_pressed = False
-                self.game_state.player.shooter.frame_counter = -1
 
                 if task.status is TaskStatus.open:
                     if event.key == pygame.K_BACKSPACE:
@@ -45,6 +42,9 @@ class EventHandler:
                     else:
                         if len(task.current_text) <= MAX_TEXT_LEN:
                             task.current_text += event.unicode
+            if event.type == pygame.MOUSEBUTTONUP and self.is_mouse_button_pressed:
+                self.is_mouse_button_pressed = False
+                self.game_state.player.shooter.frame_counter = -1
 
             if event.type == pygame.KEYDOWN and event.key in self.registered_keys:
                 self.set_keys.add(event.key)
