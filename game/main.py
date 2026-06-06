@@ -26,21 +26,43 @@ def init_pygame():
 def show_splash_screen(screen, path_video, path_music: str | None = None):
     clip = VideoFileClip(path_video)
 
+    sound = None
     if path_music is not None:
         sound = pygame.mixer.Sound(path_music)
         sound.play()
 
-    for frame in clip.iter_frames(fps=clip.fps):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                exit()
+    clock = pygame.time.Clock()
+    start_time = pygame.time.get_ticks()
 
-        surface = pygame.surfarray.make_surface(numpy.transpose(frame, (1, 0, 2)))
+    try:
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    if sound is not None:
+                        sound.stop()
+                    clip.close()
+                    pygame.quit()
+                    exit()
 
-        screen.blit(surface, (0, 0))
-        pygame.display.flip()
-        Clock().tick(clip.fps)
+            elapsed = (pygame.time.get_ticks() - start_time) / 1000
+
+            if elapsed >= clip.duration:
+                break
+
+            frame = clip.get_frame(elapsed)
+            surface = pygame.surfarray.make_surface(
+                numpy.transpose(frame, (1, 0, 2))
+            )
+
+            screen.blit(surface, (0, 0))
+            pygame.display.flip()
+
+            clock.tick(60)
+
+    finally:
+        if sound is not None:
+            sound.stop()
+        clip.close()
 
 
 def run_game():
