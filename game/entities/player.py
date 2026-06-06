@@ -1,24 +1,25 @@
-from pygame import Surface, draw, Rect
+from pygame import Surface, draw, Rect, image, transform
 
 from game.entities.base import BaseEntity
 
 
 class Player(BaseEntity):
     def __init__(self):
-        self.sprite_image = Rect(100, 100, 64, 128)
-        self.speed = 20
+        self.hitbox = Rect(100, 100, 64, 128)
+        self.image = transform.scale(image.load("assets/player.png").convert_alpha(), (64, 128))
+        self.speed = 10
 
     def render(self, screen: Surface):
-        draw.rect(screen, (200, 1, 1), self.sprite_image)
+        screen.blit(self.image, self.hitbox)
 
     def move_up(self):
-        self.sprite_image.y -= self.speed
+        self.hitbox.y -= self.speed
 
     def move_down(self):
-        self.sprite_image.y += self.speed
+        self.hitbox.y += self.speed
 
     def move_left(self):
-        self.sprite_image.x -= self.speed
+        self.hitbox.x -= self.speed
 
     def move_right(self):
-        self.sprite_image.x += self.speed
+        self.hitbox.x += self.speed
