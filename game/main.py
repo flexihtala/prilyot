@@ -1,4 +1,5 @@
 import pygame
+from pygame import display
 
 from game.core.event_handler import EventHandler
 from game.entities.game import Game
@@ -10,12 +11,13 @@ from game.entities.timer import Timer
 
 def init_pygame():
     pygame.init()
-    pygame.display.set_mode((800, 600))
+    screen = pygame.display.set_mode((800, 600))
     pygame.display.set_caption("Прилёт")
+    return screen
 
 
 def run_game():
-    init_pygame()
+    screen = init_pygame()
 
     player = Player()
     station = Station()
@@ -27,7 +29,8 @@ def run_game():
     while True:
         event_handler.handle_events(pygame.event.get())
         game.update()
-        game.render()
+        game.render(screen)
+        display.flip()
 
 
 def main():

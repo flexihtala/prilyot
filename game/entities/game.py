@@ -1,3 +1,5 @@
+from pygame import Surface
+
 from game.entities.base import BaseEntity
 from game.entities.game_state import GameState
 
@@ -10,6 +12,6 @@ class Game(BaseEntity):
         for entity in self.game_state.entities:
             entity.update()
 
-    def render(self):
+    def render(self, screen: Surface):
         for entity in self.game_state.entities:
-            entity.render()
+            entity.render(screen)
