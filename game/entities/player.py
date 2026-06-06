@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 
 class Player(BaseEntity):
     def __init__(self):
-        self.position = constants.PLAYER_START_POSITION
+        self.position = constants.PLAYER_START_POSITION.copy()
         self.width = constants.PLAYER_WIDTH
         self.height = constants.PLAYER_HEIGHT
         self.hitbox = Rect(*self.position, self.width, self.height)

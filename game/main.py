@@ -51,9 +51,7 @@ def show_splash_screen(screen, path_video, path_music: str | None = None):
                 break
 
             frame = clip.get_frame(elapsed)
-            surface = pygame.surfarray.make_surface(
-                numpy.transpose(frame, (1, 0, 2))
-            )
+            surface = pygame.surfarray.make_surface(numpy.transpose(frame, (1, 0, 2)))
 
             screen.blit(surface, (0, 0))
             pygame.display.flip()
@@ -65,19 +63,13 @@ def show_splash_screen(screen, path_video, path_music: str | None = None):
             sound.stop()
         clip.close()
 
+
 def load_music():
     pygame.mixer.music.load("assets/sounds/main_part_song.mp3")
     pygame.mixer.music.set_volume(0.25)
 
 
-def run_game():
-    screen = init_pygame()
-    show_splash_screen(screen=screen, path_video="assets/splash_screen.mp4")
-    load_music()
-
-    menu = Menu()
-    menu.run_scene_loop(screen)
-
+def play_game(screen):
     pygame.mixer.music.play(-1)
 
     player = Player()
@@ -100,7 +92,22 @@ def run_game():
             display.flip()
     except TheEndError:
         pygame.mixer.music.stop()
-        show_splash_screen(screen=screen, path_video="assets/finish_1920x1080.mp4", path_music="assets/finish_music.mp3")
+        show_splash_screen(
+            screen=screen,
+            path_video="assets/finish_1920x1080.mp4",
+            path_music="assets/finish_music.mp3",
+        )
+
+
+def run_game():
+    screen = init_pygame()
+    show_splash_screen(screen=screen, path_video="assets/splash_screen.mp4")
+    load_music()
+
+    while True:
+        menu = Menu()
+        menu.run_scene_loop(screen)
+        play_game(screen)
 
 
 if __name__ == "__main__":
