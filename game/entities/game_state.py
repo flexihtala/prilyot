@@ -28,5 +28,9 @@ class GameState:
         self.monsters.append(monster)
 
     @property
-    def entities(self) -> list[BaseEntity]:
+    def entities_for_update(self) -> list[BaseEntity]:
         return [self.player, self.station, self.timer, *self.bullets, *self.monsters]
+
+    @property
+    def entities_for_render(self) -> list[BaseEntity]:
+        return [self.station, self.player, *self.bullets, *self.monsters, self.timer]
