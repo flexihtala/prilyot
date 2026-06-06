@@ -6,6 +6,7 @@ from game.entities.base import BaseEntity
 
 from pygame import Surface, Rect
 from game import constants
+from game.entities.errors import TheEndError
 
 if TYPE_CHECKING:
     from game.entities.game_state import GameState
@@ -54,7 +55,7 @@ class Timer(BaseEntity):
             datetime.now(UTC) - self.current_real_time
         ).total_seconds()
         if self.remaining_time <= 0:
-            raise RuntimeError("Время вышло")
+            raise TheEndError()
 
         current_width = (self.remaining_time / self.time) * self.width
 

@@ -5,6 +5,7 @@ from game.constants import MAX_TEXT_LEN
 from game.entities.enums import TaskStatus
 from game.entities.game_state import GameState
 
+
 class EventHandler:
     def __init__(self, game_state: GameState):
         self.game_state = game_state
@@ -13,11 +14,11 @@ class EventHandler:
         self.is_mouse_button_pressed = False
         self.mouse_pos: list[int] = [0, 0]
         self.registered_keys: set[int] = {
-            pygame.K_DOWN,
-            pygame.K_UP,
-            pygame.K_LEFT,
-            pygame.K_RIGHT,
             pygame.K_e,
+            pygame.K_s,
+            pygame.K_w,
+            pygame.K_d,
+            pygame.K_a,
         }
 
     def handle_events(self, events: list[Event]):
@@ -50,8 +51,6 @@ class EventHandler:
                 self.is_mouse_button_pressed = False
                 self.game_state.player.shooter.frame_counter = -1
 
-
-
             if event.type == pygame.KEYDOWN and event.key in self.registered_keys:
                 self.set_keys.add(event.key)
 
@@ -60,17 +59,16 @@ class EventHandler:
 
             self.mouse_pos = list(pygame.mouse.get_pos())
 
-
         for key in self.set_keys:
             if task.status is not TaskStatus.open:
                 match key:
-                    case pygame.K_DOWN:
+                    case pygame.K_s:
                         player.move_down()
-                    case pygame.K_UP:
+                    case pygame.K_w:
                         player.move_up()
-                    case pygame.K_LEFT:
+                    case pygame.K_a:
                         player.move_left()
-                    case pygame.K_RIGHT:
+                    case pygame.K_d:
                         player.move_right()
 
         if self.is_mouse_button_pressed:
