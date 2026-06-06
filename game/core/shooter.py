@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
+import pygame
 from pygame import Vector2
 
 from game import constants
@@ -15,6 +16,8 @@ class Shooter:
         self.frame_counter = -1
         self.shooting_period = 0.25
         self.offset = Vector2(constants.PLAYER_WIDTH / 2, constants.PLAYER_HEIGHT / 2)
+        self.sound = pygame.mixer.Sound("assets/sounds/shot.wav")
+        self.sound.set_volume(0.5)
 
     def shoot(self, game_state: GameState, player_pos: list[int], mouse_pos: list[int]):
         self.frame_counter += 1
@@ -22,3 +25,4 @@ class Shooter:
         if self.frame_counter % (self.shooting_period * 60) == 0:
             bullet = Bullet(player_pos + self.offset, mouse_pos)
             game_state.add_bullet(bullet)
+            self.sound.play()
