@@ -1,4 +1,3 @@
-
 import pygame
 from pygame.event import Event
 

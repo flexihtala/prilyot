@@ -4,9 +4,9 @@ from pygame.time import Clock
 
 import constants
 from game.core.event_handler import EventHandler
+from game.core.monster_spawner import MonsterSpawner
 from game.entities.game import Game
 from game.entities.game_state import GameState
-from game.entities.monster import Monster
 from game.entities.player import Player
 from game.entities.station import Station
 from game.entities.timer import Timer
@@ -25,24 +25,21 @@ def run_game():
     player = Player()
     station = Station()
     timer = Timer()
-    # monsters
-    monster1 = Monster([200, 0])
-    monster2 = Monster([500, 250])
-    monster3 = Monster([300, 500])
+    monster_spawner = MonsterSpawner()
 
     game_state = GameState(player=player, station=station, timer=timer)
-    game_state.add_monster(monster1)
-    game_state.add_monster(monster2)
-    game_state.add_monster(monster3)
     event_handler = EventHandler(game_state)
     game = Game(game_state)
+    clock = Clock()
 
     while True:
-        Clock().tick(60)
+        clock.tick(60)
         event_handler.handle_events(events=pygame.event.get())
         game.update(game_state=game_state)
+        monster_spawner.spawn_monster(game_state=game_state)
         game.render(screen=screen)
         display.flip()
+        print(clock)
 
 
 if __name__ == "__main__":
