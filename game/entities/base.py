@@ -1,0 +1,6 @@
+class BaseEntity:
+    def update(self):
+        ...
+
+    def render(self):
+        ...
