@@ -1,3 +1,8 @@
+import pygame
+from pygame import image, transform
+
+from game.schemas.task import Task
+
 SCREEN_SIZE = (1800, 1169)
 STATION_POSITION = (900, 190)
 STATION_WIDTH = 256
@@ -7,3 +12,13 @@ PLAYER_START_POSITION = [800, 190]
 PLAYER_WIDTH = 64
 PLAYER_HEIGHT = 128
 PLAYER_SPEED = 5
+
+
+TASKS = [
+    Task(
+        image=transform.scale(
+            image.load("assets/tasks/task_1.png").convert_alpha(), (100, 100)
+        ),
+        correct_answer="12",
+    ),
+]
