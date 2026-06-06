@@ -22,6 +22,7 @@ class Player(BaseEntity):
         )
         self.speed = constants.PLAYER_SPEED
         self.is_freeze = False
+        self.health = 100
 
     def is_near_station(self, station: Station) -> bool:
         return self.hitbox.colliderect(station.hitbox)
@@ -43,3 +44,8 @@ class Player(BaseEntity):
 
     def move_right(self):
         self.position[0] += self.speed
+
+    def set_damage(self, damage: int = 5) -> None:
+        self.health -= damage
+        if self.health <= 0:
+            raise RuntimeError("Ты умер")

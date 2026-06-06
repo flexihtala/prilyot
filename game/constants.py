@@ -1,8 +1,3 @@
-import pygame
-from pygame import image, transform
-
-from game.schemas.task import Task
-
 SCREEN_SIZE = (1800, 1169)
 STATION_POSITION = (900, 190)
 STATION_WIDTH = 256
