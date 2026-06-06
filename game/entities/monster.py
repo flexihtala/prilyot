@@ -9,13 +9,13 @@ from game.entities.base import BaseEntity
 class Monster(BaseEntity):
     def __init__(self, position) -> None:
         self.position = position
-        self.width = 64
-        self.height = 128
+        self.width = 96
+        self.height = 192
         self.sprite_image = Rect(
             self.position[0], self.position[1], self.width, self.height
         )
         image_name = self._get_image()
-        self.image = transform.scale(image.load(image_name).convert_alpha(), (64, 128))
+        self.image = transform.scale(image.load(image_name).convert_alpha(), (96, 192))
         self.speed_coef = 2
 
     def update(self, game_state):
