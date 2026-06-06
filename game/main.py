@@ -39,7 +39,7 @@ def show_splash_screen(screen):
 
 def run_game():
     screen = init_pygame()
-    show_splash_screen(screen)
+    # show_splash_screen(screen)
 
     player = Player()
     station = Station()
@@ -58,7 +58,6 @@ def run_game():
         monster_spawner.spawn_monster(game_state=game_state)
         game.render(screen=screen)
         display.flip()
-        print(clock)
 
 
 if __name__ == "__main__":

@@ -3,13 +3,13 @@ import random
 from game.constants import SCREEN_SIZE
 from game.entities.game_state import GameState
 from game.entities.monster import Monster
-from game.schemas.Rectangle import Rectangle as RectangleSchema
+from game.schemas.rectangle import Rectangle as RectangleSchema
 
 
 class MonsterSpawner:
     def __init__(self):
-        self.frame_counter = 0
-        self.spawn_period = 1
+        self.frame_counter = -1
+        self.spawn_period = 0.5
 
         offset = 25
         left_rect = RectangleSchema(
@@ -46,7 +46,7 @@ class MonsterSpawner:
             new_monster = Monster(position=new_monster_position)
             game_state.add_monster(new_monster)
 
-    def _get_new_monster_position(self):
+    def _get_new_monster_position(self) -> list[int]: # [x, y]
         sector = self.sectors[random.randint(0, 3)]
         return [
             random.randint(sector.x_first, sector.x_second),

@@ -16,6 +16,10 @@ class Game(BaseEntity):
         for entity in self.game_state.entities_for_update:
             entity.update(self.game_state)
 
+        for bullet in self.game_state.bullets:
+            if bullet.should_be_deleted:
+                self.game_state.bullets.remove(bullet)
+
     def render(self, screen: Surface):
         screen.blit(self.map, (0, 0))
         for entity in self.game_state.entities_for_render:

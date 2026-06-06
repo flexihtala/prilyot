@@ -1,6 +1,7 @@
 from __future__ import annotations
 from pygame import Surface, Rect, image, transform
 
+from game.core.shooter import Shooter
 from game.entities.base import BaseEntity
 from game import constants
 from typing import TYPE_CHECKING
@@ -23,6 +24,8 @@ class Player(BaseEntity):
         self.speed = constants.PLAYER_SPEED
         self.is_freeze = False
         self.health = 100
+
+        self.shooter = Shooter()
 
     def is_near_station(self, station: Station) -> bool:
         return self.hitbox.colliderect(station.hitbox)
@@ -49,3 +52,6 @@ class Player(BaseEntity):
         self.health -= damage
         if self.health <= 0:
             raise RuntimeError("Ты умер")
+
+    def shoot(self, game_state: GameState, mouse_pos: list[int]) -> None:
+        self.shooter.shoot(game_state, self.position, mouse_pos)

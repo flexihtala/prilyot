@@ -7,7 +7,7 @@ from game.entities.base import BaseEntity
 
 
 class Monster(BaseEntity):
-    def __init__(self, position) -> None:
+    def __init__(self, position: list[int]) -> None:
         self.position = position
         self.width = 96
         self.height = 192
