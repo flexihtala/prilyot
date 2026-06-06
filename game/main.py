@@ -37,11 +37,15 @@ def show_splash_screen(screen):
         pygame.display.flip()
         Clock().tick(clip.fps)
 
+def load_music():
+    pygame.mixer.music.load("assets/sounds/main_part_song.mp3")
+    pygame.mixer.music.set_volume(0.5)
+
 
 def run_game():
     screen = init_pygame()
-    pygame.mixer.music.load("assets/sounds/main_part_song.mp3")
     show_splash_screen(screen)
+    load_music()
 
     pygame.mixer.music.play(-1)
 

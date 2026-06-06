@@ -50,4 +50,4 @@ class Bullet(BaseEntity):
         for monster in game_state.monsters:
             if monster.hitbox.colliderect(self.hitbox):
                 self.should_be_deleted = True
-                game_state.monsters.remove(monster)
+                monster.on_death(game_state)
