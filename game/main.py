@@ -1,5 +1,5 @@
 import pygame
-from pygame import display, image, transform
+from pygame import display
 from pygame.time import Clock
 
 import constants
@@ -25,9 +25,11 @@ def run_game():
     player = Player()
     station = Station()
     timer = Timer()
+    # monsters
     monster1 = Monster([200, 0])
     monster2 = Monster([500, 250])
     monster3 = Monster([300, 500])
+
     game_state = GameState(player=player, station=station, timer=timer)
     game_state.add_monster(monster1)
     game_state.add_monster(monster2)
@@ -37,16 +39,11 @@ def run_game():
 
     while True:
         Clock().tick(60)
-        event_handler.handle_events(pygame.event.get())
-        game.update()
-        game.render(screen)
+        event_handler.handle_events(events=pygame.event.get())
+        game.update(game_state=game_state)
+        game.render(screen=screen)
         display.flip()
 
 
-def main():
-    print("Hello from prilyot!")
-
-
 if __name__ == "__main__":
-    main()
     run_game()

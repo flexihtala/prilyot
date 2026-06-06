@@ -1,4 +1,4 @@
-from pygame import Surface, draw, Rect, image, transform
+from pygame import Surface, Rect, image, transform
 
 from game.entities.base import BaseEntity
 
@@ -9,7 +9,9 @@ class Player(BaseEntity):
         self.width = 64
         self.height = 128
         self.hitbox = Rect(100, 100, 64, 128)
-        self.image = transform.scale(image.load("assets/player.png").convert_alpha(), (64, 128))
+        self.image = transform.scale(
+            image.load("assets/player.png").convert_alpha(), (64, 128)
+        )
         self.speed = 5
 
     def render(self, screen: Surface):
