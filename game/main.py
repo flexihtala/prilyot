@@ -7,6 +7,7 @@ from pygame.time import Clock
 import constants
 from game.core.event_handler import EventHandler
 from game.core.monster_spawner import MonsterSpawner
+from game.entities.errors import TheEndError
 from game.entities.game import Game
 from game.entities.game_state import GameState
 from game.entities.player import Player
@@ -22,8 +23,8 @@ def init_pygame():
     return screen
 
 
-def show_splash_screen(screen):
-    clip = VideoFileClip("assets/splash_screen.mp4")
+def show_splash_screen(screen, path_video):
+    clip = VideoFileClip(path_video)
 
     for frame in clip.iter_frames(fps=clip.fps):
         for event in pygame.event.get():
@@ -40,7 +41,7 @@ def show_splash_screen(screen):
 
 def run_game():
     screen = init_pygame()
-    show_splash_screen(screen)
+    show_splash_screen(screen=screen, path_video="assets/splash_screen.mp4")
 
     player = Player()
     station = Station()
@@ -53,13 +54,16 @@ def run_game():
     game = Game(game_state)
     clock = Clock()
 
-    while True:
-        clock.tick(60)
-        event_handler.handle_events(events=pygame.event.get())
-        game.update(game_state=game_state)
-        monster_spawner.spawn_monster(game_state=game_state)
-        game.render(screen=screen)
-        display.flip()
+    try:
+        while True:
+            clock.tick(60)
+            event_handler.handle_events(events=pygame.event.get())
+            game.update(game_state=game_state)
+            monster_spawner.spawn_monster(game_state=game_state)
+            game.render(screen=screen)
+            display.flip()
+    except TheEndError:
+        show_splash_screen(screen=screen, path_video="assets/finish_1920x1080.mp4")
 
 
 if __name__ == "__main__":

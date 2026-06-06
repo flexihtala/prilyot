@@ -1,0 +1,2 @@
+class TheEndError(Exception):
+    pass

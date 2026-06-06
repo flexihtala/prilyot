@@ -8,6 +8,7 @@ from game.entities.base import BaseEntity
 from game import constants
 from typing import TYPE_CHECKING
 
+from game.entities.errors import TheEndError
 from game.entities.station import Station
 
 if TYPE_CHECKING:
@@ -62,7 +63,7 @@ class Player(BaseEntity):
     def set_damage(self, damage: int = 5) -> None:
         self.health -= damage
         if self.health <= 0:
-            raise RuntimeError("Ты умер")
+            raise TheEndError()
 
     def shoot(self, game_state: GameState, mouse_pos: list[int]) -> None:
         self.shooter.shoot(game_state, self.position, mouse_pos)
