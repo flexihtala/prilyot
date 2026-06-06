@@ -6,10 +6,10 @@ from game.entities.base import BaseEntity
 class Player(BaseEntity):
     def __init__(self):
         self.position = [100, 100]
-        self.width = 64
-        self.height = 128
-        self.hitbox = Rect(100, 100, 64, 128)
-        self.image = transform.scale(image.load("assets/player.png").convert_alpha(), (64, 128))
+        self.width = 32
+        self.height = 64
+        self.hitbox = Rect(100, 100, 32, 64)
+        self.image = transform.scale(image.load("assets/player.png").convert_alpha(), (32, 64))
         self.speed = 5
 
     def render(self, screen: Surface):
