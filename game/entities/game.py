@@ -10,7 +10,7 @@ class Game(BaseEntity):
 
     def update(self):
         for entity in self.game_state.entities:
-            entity.update()
+            entity.update(self.game_state)
 
     def render(self, screen: Surface):
         for entity in self.game_state.entities:
