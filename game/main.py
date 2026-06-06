@@ -20,6 +20,7 @@ def init_pygame():
     pygame.display.set_caption("Прилёт")
     return screen
 
+
 def show_splash_screen(screen):
     clip = VideoFileClip("assets/splash_screen.mp4")
 
@@ -29,13 +30,12 @@ def show_splash_screen(screen):
                 pygame.quit()
                 exit()
 
-        surface = pygame.surfarray.make_surface(
-            numpy.transpose(frame, (1, 0, 2))
-        )
+        surface = pygame.surfarray.make_surface(numpy.transpose(frame, (1, 0, 2)))
 
         screen.blit(surface, (0, 0))
         pygame.display.flip()
         Clock().tick(clip.fps)
+
 
 def run_game():
     screen = init_pygame()

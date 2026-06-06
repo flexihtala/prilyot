@@ -1,4 +1,6 @@
 from __future__ import annotations
+
+import pygame
 from pygame import Surface, Rect, image, transform
 
 from game.entities.base import BaseEntity
@@ -32,6 +34,16 @@ class Player(BaseEntity):
 
     def render(self, screen: Surface):
         screen.blit(self.image, self.hitbox)
+        pygame.draw.rect(
+            screen,
+            (255, 0, 0),
+            Rect(
+                self.position[0],
+                self.position[1] - 15,
+                self.width * self.health / 100,
+                20,
+            ),
+        )
 
     def move_up(self):
         self.position[1] -= self.speed
