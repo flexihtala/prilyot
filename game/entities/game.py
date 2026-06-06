@@ -12,7 +12,7 @@ class Game(BaseEntity):
             image.load("assets/map.png").convert_alpha(), constants.SCREEN_SIZE
         )
 
-    def update(self, game_state):
+    def update(self, game_state: GameState):
         for entity in self.game_state.entities_for_update:
             entity.update(self.game_state)
 
