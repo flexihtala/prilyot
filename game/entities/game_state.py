@@ -33,10 +33,10 @@ class GameState:
     @property
     def entities_for_update(self) -> list[BaseEntity]:
         return [
-            self.task,
             self.player,
             self.station,
             self.timer,
+            self.task,
             *self.bullets,
             *self.monsters,
         ]

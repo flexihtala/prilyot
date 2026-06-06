@@ -43,7 +43,7 @@ class Task(BaseEntity):
             print("Плохо ответ")
             return
 
-        # TODO доавить тики к таймеру
+        game_state.timer.add_time(constants.TASK_TIME_PLUS)
         print("Хороший ответ")
         self.status = TaskStatus.close
         self.current_text = ""
